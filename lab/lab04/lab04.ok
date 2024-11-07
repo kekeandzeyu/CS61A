@@ -1,6 +1,6 @@
 {
     "name": "Lab 4",
-    "endpoint": "cal/cs61a/su24/lab04",
+    "endpoint": "cal/cs61a/fa24/lab04",
     "src": [
         "lab04.py"
     ],
@@ -9,12 +9,12 @@
         "tests/*.py": "ok_test"
     },
     "default_tests": [
-        "lists-wwpd",
         "pokemon",
-        "flatten",
-        "merge",
-        "size_of_tree",
-        "replace_loki_at_leaf"
+        "divide",
+        "buy",
+        "distance",
+        "closer_city",
+        "check_city_abstraction"
     ],
     "protocols": [
         "restore",
