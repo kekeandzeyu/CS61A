@@ -119,8 +119,10 @@ def balanced(m):
     else:
         left_end = end(left(m))
         right_end = end(right(m))
+
         left_torque = length(left(m)) * total_mass(left_end)
         right_torque = length(right(m)) * total_mass(right_end)
+        
         return left_torque == right_torque and balanced(left_end) and balanced(right_end)
 
 
