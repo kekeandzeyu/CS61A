@@ -1,9 +1,74 @@
-LAB_SOURCE_FILE=__file__
+LAB_SOURCE_FILE = __file__
+
+
+def print_if(s, f):
+    """Print each element of s for which f returns a true value.
+
+    >>> print_if([3, 4, 5, 6], lambda x: x > 4)
+    5
+    6
+    >>> result = print_if([3, 4, 5, 6], lambda x: x % 2 == 0)
+    4
+    6
+    >>> print(result)  # print_if should return None
+    None
+    """
+    for x in s:
+        "*** YOUR CODE HERE ***"
+
+
+def close(s, k):
+    """Return how many elements of s that are within k of their index.
+
+    >>> t = [6, 2, 4, 3, 5]
+    >>> close(t, 0)  # Only 3 is equal to its index
+    1
+    >>> close(t, 1)  # 2, 3, and 5 are within 1 of their index
+    3
+    >>> close(t, 2)  # 2, 3, 4, and 5 are all within 2 of their index
+    4
+    >>> close(list(range(10)), 0)
+    10
+    """
+    count = 0
+    for i in range(len(s)):  # Use a range to loop over indices
+        "*** YOUR CODE HERE ***"
+    return count
+
+
+def close_list(s, k):
+    """Return a list of the elements of s that are within k of their index.
+
+    >>> t = [6, 2, 4, 3, 5]
+    >>> close_list(t, 0)  # Only 3 is equal to its index
+    [3]
+    >>> close_list(t, 1)  # 2, 3, and 5 are within 1 of their index
+    [2, 3, 5]
+    >>> close_list(t, 2)  # 2, 3, 4, and 5 are all within 2 of their index
+    [2, 4, 3, 5]
+    """
+    return [___ for i in range(len(s)) if ___]
+
+
+from math import sqrt
+
+def squares(s):
+    """Returns a new list containing square roots of the elements of the
+    original list that are perfect squares.
+
+    >>> seq = [8, 49, 8, 9, 2, 1, 100, 102]
+    >>> squares(seq)
+    [7, 3, 1, 10]
+    >>> seq = [500, 30]
+    >>> squares(seq)
+    []
+    """
+    return [___ for n in s if ___]
 
 
 def double_eights(n):
-    """ Returns whether or not n has two digits in row that
-    are the number 8. Assume n has at least two digits in it.
+    """Returns whether or not n has two digits in row that
+    are the number 8.
 
     >>> double_eights(1288)
     True
@@ -17,34 +82,12 @@ def double_eights(n):
     True
     >>> double_eights(78)
     False
-    >>> from construct_check import check
     >>> # ban iteration
+    >>> from construct_check import check
     >>> check(LAB_SOURCE_FILE, 'double_eights', ['While', 'For'])
     True
     """
-    last, second_last = n % 10, n // 10 % 10
-    if last == 8 and second_last == 8:
-        return True
-    elif n < 100:
-        return False
-    return double_eights(n // 10)
-
-    # Alternate solution
-    # last, second_last = n % 10, n // 10 % 10
-    # if n < 10:
-    #     return False
-    # return (last == 8 and second_last == 8) or double_eights(n // 10)
-
-    # Alternate solution with helper function: 
-    # def helper(num, prev_eight):
-    #     if num == 0:
-    #         return False
-    #     if num % 10 == 8:
-    #         if prev_eight:
-    #             return True
-    #         return helper(num // 10, True)
-    #     return helper(num // 10, False)
-    # return helper(n, False)
+    "*** YOUR CODE HERE ***"
 
 
 def make_onion(f, g):
@@ -73,97 +116,10 @@ def make_onion(f, g):
     """
     def can_reach(x, y, limit):
         if limit < 0:
-            return False
+            return ____
         elif x == y:
-            return True
+            return ____
         else:
-            return can_reach(f(x), y, limit - 1) or can_reach(g(x), y, limit - 1)
+            return can_reach(____, ____, limit - 1) or can_reach(____, ____, limit - 1)
     return can_reach
 
-
-def mario_number(level):
-    """Return the number of ways that Mario can perform a sequence of steps
-    or jumps to reach the end of the level without ever landing in a Piranha
-    plant. Assume that every level begins and ends with a space.
-
-    >>> mario_number(' P P ')   # jump, jump
-    1
-    >>> mario_number(' P P  ')   # jump, jump, step
-    1
-    >>> mario_number('  P P ')  # step, jump, jump
-    1
-    >>> mario_number('   P P ') # step, step, jump, jump or jump, jump, jump
-    2
-    >>> mario_number(' P PP ')  # Mario cannot jump two plants
-    0
-    >>> mario_number('    ')    # step, jump ; jump, step ; step, step, step
-    3
-    >>> mario_number('    P    ')
-    9
-    >>> mario_number('   P    P P   P  P P    P     P ')
-    180
-    """
-    def ways(n):
-        if n == len(level)-1:
-            return 1
-        if n >= len(level) or level[n] == 'P':
-            return 0
-        return ways(n+1) + ways(n+2)
-    return ways(0)
-
-
-def max_subseq(n, t):
-    """
-    Return the maximum subsequence of length at most t that can be found in the given number n.
-    For example, for n = 2012 and t = 2, we have that the subsequences are
-        2
-        0
-        1
-        2
-        20
-        21
-        22
-        01
-        02
-        12
-    and of these, the maxumum number is 22, so our answer is 22.
-
-    >>> max_subseq(2012, 2)
-    22
-    >>> max_subseq(20125, 3)
-    225
-    >>> max_subseq(20125, 5)
-    20125
-    >>> max_subseq(20125, 6) # note that 20125 == 020125
-    20125
-    >>> max_subseq(12345, 3)
-    345
-    >>> max_subseq(12345, 0) # 0 is of length 0
-    0
-    >>> max_subseq(12345, 1)
-    5
-    """
-    if n == 0 or t == 0:
-        return 0
-    with_last = max_subseq(n // 10, t - 1) * 10 + n % 10
-    without_last = max_subseq(n // 10, t)
-    return max(with_last, without_last)
-
-
-def is_prime(n):
-    """
-    >>> is_prime(7)
-    True
-    >>> is_prime(10)
-    False
-    >>> is_prime(1)
-    False
-    """
-    def prime_helper(index):
-        if index == n:
-            return True
-        elif n % index == 0 or n == 1:
-            return False
-        else:
-            return prime_helper(index + 1)
-    return prime_helper(2)

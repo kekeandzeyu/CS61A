@@ -1,6 +1,6 @@
 {
     "name": "Lab 3",
-    "endpoint": "cal/cs61a/su24/lab03",
+    "endpoint": "cal/cs61a/fa24/lab03",
     "src": [
         "lab03.py"
     ],
@@ -9,10 +9,14 @@
         "tests/*.py": "ok_test"
     },
     "default_tests": [
+        "lists-wwpd",
+        "print_if",
+        "close",
+        "list-comprehensions-wwpd",
+        "close_list",
+        "squares",
         "double_eights",
-        "make_onion",
-        "mario_number",
-        "max_subseq"
+        "make_onion"
     ],
     "protocols": [
         "restore",
