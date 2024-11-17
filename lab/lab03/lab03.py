@@ -14,7 +14,12 @@ def print_if(s, f):
     None
     """
     for x in s:
-        "*** YOUR CODE HERE ***"
+        if f(x):
+            print(x)
+
+    return None 
+    # This line is unnecessary
+    # Python will implicitly return None if no return statement is reached
 
 
 def close(s, k):
@@ -32,7 +37,8 @@ def close(s, k):
     """
     count = 0
     for i in range(len(s)):  # Use a range to loop over indices
-        "*** YOUR CODE HERE ***"
+        if abs(s[i] - i) <= k:
+            count += 1
     return count
 
 
@@ -47,7 +53,7 @@ def close_list(s, k):
     >>> close_list(t, 2)  # 2, 3, 4, and 5 are all within 2 of their index
     [2, 4, 3, 5]
     """
-    return [___ for i in range(len(s)) if ___]
+    return [s[i] for i in range(len(s)) if abs(s[i] - i) <= k]
 
 
 from math import sqrt
@@ -63,7 +69,11 @@ def squares(s):
     >>> squares(seq)
     []
     """
-    return [___ for n in s if ___]
+    return [round(n ** 0.5) for n in s if n == round(n ** 0.5) ** 2]
+    # My Implementation (bad):
+    # return [int(sqrt(n)) for n in s if sqrt(n) == round(sqrt(n))]
+    # The above implementation is bad because it compares two floating points 
+    # which may have rounding errors!
 
 
 def double_eights(n):
@@ -87,7 +97,29 @@ def double_eights(n):
     >>> check(LAB_SOURCE_FILE, 'double_eights', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    last, second_last = n % 10, n // 10 % 10
+    if last == 8 and second_last == 8:
+        return True
+    elif n < 100:
+        return False
+    return double_eights(n // 10)
+
+    # Alternate solution 
+    # last, second_last = n % 10, n // 10 % 10
+    # if n < 10:
+    #     return False
+    # return (last == 8 and second_last == 8) or double_eights(n // 10)
+
+    # Alternate solution with helper function:
+    # def helper(num, prev_eight):
+    #     if num == 0:
+    #         return False
+    #     if num % 10 == 8:
+    #         if prev_eight:
+    #             return True
+    #         return helper(num // 10, True)
+    #     return helper(num // 10, False)
+    # return helper(n, False)
 
 
 def make_onion(f, g):
@@ -116,10 +148,10 @@ def make_onion(f, g):
     """
     def can_reach(x, y, limit):
         if limit < 0:
-            return ____
+            return False
         elif x == y:
-            return ____
+            return True
         else:
-            return can_reach(____, ____, limit - 1) or can_reach(____, ____, limit - 1)
+            return can_reach(f(x), y, limit - 1) or can_reach(g(x), y, limit - 1)
     return can_reach
 
