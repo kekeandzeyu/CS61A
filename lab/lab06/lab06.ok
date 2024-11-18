@@ -1,6 +1,6 @@
 {
     "name": "Lab 6",
-    "endpoint": "cal/cs61a/su24/lab06",
+    "endpoint": "cal/cs61a/fa24/lab06",
     "src": [
         "lab06.py",
         "classes.py"
@@ -11,9 +11,9 @@
         "classes.py": "doctest"
     },
     "default_tests": [
-        "iterators-wwpd",
-        "count_occurrences",
-        "hailstone"
+        "BankAccount",
+        "Client",
+        "Mint"
     ],
     "protocols": [
         "restore",

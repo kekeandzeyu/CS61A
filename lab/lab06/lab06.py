@@ -1,160 +1,203 @@
-def count_occurrences(t, n, x):
-    """Return the number of times that x is equal to one of the
-    first n elements of iterator t.
+class Transaction:
+    def __init__(self, id, before, after):
+        self.id = id
+        self.before = before
+        self.after = after
 
-    >>> s = iter([10, 9, 10, 9, 9, 10, 8, 8, 8, 7])
-    >>> count_occurrences(s, 10, 9)
-    3
-    >>> t = iter([10, 9, 10, 9, 9, 10, 8, 8, 8, 7])
-    >>> count_occurrences(t, 3, 10)
-    2
-    >>> u = iter([3, 2, 2, 2, 1, 2, 1, 4, 4, 5, 5, 5])
-    >>> count_occurrences(u, 1, 3)  # Only iterate over 3
-    1
-    >>> count_occurrences(u, 3, 2)  # Only iterate over 2, 2, 2
-    3
-    >>> list(u)                     # Ensure that the iterator has advanced the right amount
-    [1, 2, 1, 4, 4, 5, 5, 5]
-    >>> v = iter([4, 1, 6, 6, 7, 7, 6, 6, 2, 2, 2, 5])
-    >>> count_occurrences(v, 6, 6)
-    2
-    """
-    count = 0
-    for _ in range(n):
-        if next(t) == x:
-            count += 1
-    return count
+    def changed(self):
+        """Return whether the transaction resulted in a changed balance."""
+        "*** YOUR CODE HERE ***"
 
+    def report(self):
+        """Return a string describing the transaction.
 
-def hailstone(n):
-    """Yields the elements of the hailstone sequence starting at n.
+        >>> Transaction(3, 20, 10).report()
+        '3: decreased 20->10'
+        >>> Transaction(4, 20, 50).report()
+        '4: increased 20->50'
+        >>> Transaction(5, 50, 50).report()
+        '5: no change'
+        """
+        msg = 'no change'
+        if self.changed():
+            "*** YOUR CODE HERE ***"
+        return str(self.id) + ': ' + msg
 
-    >>> for num in hailstone(10):
-    ...     print(num)
-    10
-    5
-    16
-    8
+class BankAccount:
+    """A bank account that tracks its transaction history.
+
+    >>> a = BankAccount('Eric')
+    >>> a.deposit(100)    # Transaction 0 for a
+    100
+    >>> b = BankAccount('Erica')
+    >>> a.withdraw(30)    # Transaction 1 for a
+    70
+    >>> a.deposit(10)     # Transaction 2 for a
+    80
+    >>> b.deposit(50)     # Transaction 0 for b
+    50
+    >>> b.withdraw(10)    # Transaction 1 for b
+    40
+    >>> a.withdraw(100)   # Transaction 3 for a
+    'Insufficient funds'
+    >>> len(a.transactions)
     4
+    >>> len([t for t in a.transactions if t.changed()])
+    3
+    >>> for t in a.transactions:
+    ...     print(t.report())
+    0: increased 0->100
+    1: decreased 100->70
+    2: increased 70->80
+    3: no change
+    >>> b.withdraw(100)   # Transaction 2 for b
+    'Insufficient funds'
+    >>> b.withdraw(30)    # Transaction 3 for b
+    10
+    >>> for t in b.transactions:
+    ...     print(t.report())
+    0: increased 0->50
+    1: decreased 50->40
+    2: no change
+    3: decreased 40->10
+    """
+
+    # *** YOU NEED TO MAKE CHANGES IN SEVERAL PLACES IN THIS CLASS ***
+
+    def __init__(self, account_holder):
+        self.balance = 0
+        self.holder = account_holder
+
+    def deposit(self, amount):
+        """Increase the account balance by amount, add the deposit
+        to the transaction history, and return the new balance.
+        """
+        self.balance = self.balance + amount
+        return self.balance
+
+    def withdraw(self, amount):
+        """Decrease the account balance by amount, add the withdraw
+        to the transaction history, and return the new balance.
+        """
+        if amount > self.balance:
+            return 'Insufficient funds'
+        self.balance = self.balance - amount
+        return self.balance
+
+
+class Email:
+    """An email has the following instance attributes:
+
+        msg (str): the contents of the message
+        sender (Client): the client that sent the email
+        recipient_name (str): the name of the recipient (another client)
+    """
+    def __init__(self, msg, sender, recipient_name):
+        self.msg = msg
+        self.sender = sender
+        self.recipient_name = recipient_name
+
+class Server:
+    """Each Server has one instance attribute called clients that is a
+    dictionary from client names to client objects.
+    """
+    def __init__(self):
+        self.clients = {}
+
+    def send(self, email):
+        """Append the email to the inbox of the client it is addressed to.
+            email is an instance of the Email class.
+        """
+        ____.inbox.append(email)
+
+    def register_client(self, client):
+        """Add a client to the clients mapping (which is a 
+        dictionary from client names to client instances).
+            client is an instance of the Client class.
+        """
+        ____[____] = ____
+
+class Client:
+    """A client has a server, a name (str), and an inbox (list).
+
+    >>> s = Server()
+    >>> a = Client(s, 'Alice')
+    >>> b = Client(s, 'Bob')
+    >>> a.compose('Hello, World!', 'Bob')
+    >>> b.inbox[0].msg
+    'Hello, World!'
+    >>> a.compose('CS 61A Rocks!', 'Bob')
+    >>> len(b.inbox)
     2
-    1
+    >>> b.inbox[1].msg
+    'CS 61A Rocks!'
+    >>> b.inbox[1].sender.name
+    'Alice'
     """
-    while n > 1:
-        yield n
-        if n % 2 == 0:
-            n //= 2
-        else:
-            n = n * 3 + 1
-    yield n
+    def __init__(self, server, name):
+        self.inbox = []
+        self.server = server
+        self.name = name
+        server.register_client(____)
 
-    # Recursive Solution
-
-
-# def hailstone(n):
-#     yield n
-#     if n != 1:
-#         if n % 2 == 0:
-#             yield from hailstone(n//2)
-#         else:
-#             yield from hailstone(n*3+1)
+    def compose(self, message, recipient_name):
+        """Send an email with the given message to the recipient."""
+        email = Email(message, ____, ____)
+        self.server.send(email)
 
 
-def merge(incr_a, incr_b):
-    """Yield the elements of strictly increasing iterables incr_a and incr_b, removing
-    repeats. Assume that incr_a and incr_b have no repeats. incr_a or incr_b may or may not
-    be infinite sequences.
+class Mint:
+    """A mint creates coins by stamping on years.
 
-    >>> m = merge([0, 2, 4, 6, 8, 10, 12, 14], [0, 3, 6, 9, 12, 15])
-    >>> type(m)
-    <class 'generator'>
-    >>> list(m)
-    [0, 2, 3, 4, 6, 8, 9, 10, 12, 14, 15]
-    >>> def big(n):
-    ...    k = 0
-    ...    while True: yield k; k += n
-    >>> m = merge(big(2), big(3))
-    >>> [next(m) for _ in range(11)]
-    [0, 2, 3, 4, 6, 8, 9, 10, 12, 14, 15]
+    The update method sets the mint's stamp to Mint.present_year.
+
+    >>> mint = Mint()
+    >>> mint.year
+    2024
+    >>> dime = mint.create(Dime)
+    >>> dime.year
+    2024
+    >>> Mint.present_year = 2104  # Time passes
+    >>> nickel = mint.create(Nickel)
+    >>> nickel.year     # The mint has not updated its stamp yet
+    2024
+    >>> nickel.worth()  # 5 cents + (80 - 50 years)
+    35
+    >>> mint.update()   # The mint's year is updated to 2104
+    >>> Mint.present_year = 2179     # More time passes
+    >>> mint.create(Dime).worth()    # 10 cents + (75 - 50 years)
+    35
+    >>> Mint().create(Dime).worth()  # A new mint has the current year
+    10
+    >>> dime.worth()     # 10 cents + (155 - 50 years)
+    115
+    >>> Dime.cents = 20  # Upgrade all dimes!
+    >>> dime.worth()     # 20 cents + (155 - 50 years)
+    125
     """
-    iter_a, iter_b = iter(incr_a), iter(incr_b)
-    next_a, next_b = next(iter_a, None), next(iter_b, None)
-    while next_a is not None or next_b is not None:
-        if next_a is None or next_b is not None and next_b < next_a:
-            yield next_b
-            next_b = next(iter_b, None)
-        elif next_b is None or next_a is not None and next_a < next_b:
-            yield next_a
-            next_a = next(iter_a, None)
-        else:
-            yield next_a
-            next_a, next_b = next(iter_a, None), next(iter_b, None)
+    present_year = 2024
 
+    def __init__(self):
+        self.update()
 
-def deep_map(f, s):
-    """Replace all non-list elements x with f(x) in the nested list s.
+    def create(self, coin):
+        "*** YOUR CODE HERE ***"
 
-    >>> six = [1, 2, [3, [4], 5], 6]
-    >>> deep_map(lambda x: x * x, six)
-    >>> six
-    [1, 4, [9, [16], 25], 36]
-    >>> # Check that you're not making new lists
-    >>> s = [3, [1, [4, [1]]]]
-    >>> s1 = s[1]
-    >>> s2 = s1[1]
-    >>> s3 = s2[1]
-    >>> deep_map(lambda x: x + 1, s)
-    >>> s
-    [4, [2, [5, [2]]]]
-    >>> s1 is s[1]
-    True
-    >>> s2 is s1[1]
-    True
-    >>> s3 is s2[1]
-    True
-    """
-    for i in range(len(s)):
-        if type(s[i]) == list:
-            deep_map(f, s[i])
-        else:
-            s[i] = f(s[i])
+    def update(self):
+        "*** YOUR CODE HERE ***"
 
+class Coin:
+    cents = None # will be provided by subclasses, but not by Coin itself
 
-def buy(required_fruits, prices, total_amount):
-    """Print ways to buy some of each fruit so that the sum of prices is amount.
+    def __init__(self, year):
+        self.year = year
 
-    >>> prices = {'oranges': 4, 'apples': 3, 'bananas': 2, 'kiwis': 9}
-    >>> buy(['apples', 'oranges', 'bananas'], prices, 12)
-    [2 apples][1 orange][1 banana]
-    >>> buy(['apples', 'oranges', 'bananas'], prices, 16)
-    [2 apples][1 orange][3 bananas]
-    [2 apples][2 oranges][1 banana]
-    >>> buy(['apples', 'kiwis'], prices, 36)
-    [3 apples][3 kiwis]
-    [6 apples][2 kiwis]
-    [9 apples][1 kiwi]
-    """
+    def worth(self):
+        "*** YOUR CODE HERE ***"
 
-    def add(fruits, amount, cart):
-        if fruits == [] and amount == 0:
-            print(cart)
-        elif fruits and amount > 0:
-            fruit = fruits[0]
-            price = prices[fruit]
-            for k in range(1, amount // price + 1):
-                add(fruits[1:], amount - price * k, cart + display(fruit, k))
+class Nickel(Coin):
+    cents = 5
 
-    add(required_fruits, total_amount, '')
+class Dime(Coin):
+    cents = 10
 
-
-def display(fruit, count):
-    """Display a count of a fruit in square brackets.
-
-    >>> display('apples', 3)
-    '[3 apples]'
-    >>> display('apples', 1)
-    '[1 apple]'
-    """
-    assert count >= 1 and fruit[-1] == 's'
-    if count == 1:
-        fruit = fruit[:-1]  # get rid of the plural s
-    return '[' + str(count) + ' ' + fruit + ']'
