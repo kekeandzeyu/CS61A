@@ -3,10 +3,9 @@ test = {
   'points': 0,
   'suites': [
     {
-      'type': 'wwpp',
       'cases': [
         {
-          'code': """
+          'code': r"""
           >>> class A:
           ...   x, y = 0, 0
           ...   def __init__(self):
@@ -32,9 +31,14 @@ test = {
           >>> A.y = obj.y
           >>> print(A.y, B.y, C.y, obj.y)
           1 1 1 1
-          """
+          """,
+          'hidden': False,
+          'locked': False,
+          'multiline': False
         }
-      ]
+      ],
+      'scored': False,
+      'type': 'wwpp'
     }
   ]
 }
