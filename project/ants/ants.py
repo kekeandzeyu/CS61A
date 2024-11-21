@@ -173,9 +173,14 @@ class ThrowerAnt(Ant):
 
         This method returns None if there is no such Bee (or none in range).
         """
-        # BEGIN Problem 3 and 4
-        return random_bee(self.place.bees) # REPLACE THIS LINE
-        # END Problem 3 and 4
+        current_place = self.place
+        while current_place:
+            if not current_place.is_hive:
+                bee = random_bee(current_place.bees)
+                if bee:
+                    return bee
+            current_place = current_place.entrance
+        return None
 
     def throw_at(self, target):
         """Throw a leaf at the target Bee, reducing its health."""
@@ -508,7 +513,7 @@ class Boss(Wasp):
     """The leader of the bees. Damage to the boss by any attack is capped.
     """
     name = 'Boss'
-    damage_cap = 8
+    damage_cap = 8 
 
     def reduce_health(self, amount):
         super().reduce_health(min(amount, self.damage_cap))
