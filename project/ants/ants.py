@@ -142,16 +142,14 @@ class HarvesterAnt(Ant):
 
     name = 'Harvester'
     implemented = True
-    # OVERRIDE CLASS ATTRIBUTES HERE
+    food_cost = 2
 
     def action(self, gamestate):
         """Produce 1 additional food for the colony.
 
         gamestate -- The GameState, used to access game state information.
         """
-        # BEGIN Problem 1
-        "*** YOUR CODE HERE ***"
-        # END Problem 1
+        gamestate.food += 1
 
 
 class ThrowerAnt(Ant):
@@ -160,7 +158,7 @@ class ThrowerAnt(Ant):
     name = 'Thrower'
     implemented = True
     damage = 1
-    # ADD/OVERRIDE CLASS ATTRIBUTES HERE
+    food_cost = 3
 
     def nearest_bee(self):
         """Return the nearest Bee in a Place (that is not the hive) connected to
@@ -177,11 +175,11 @@ class ThrowerAnt(Ant):
         if target is not None:
             target.reduce_health(self.damage)
 
-    def action(self, gamestate):
+    def action(self, gamestate): 
         """Throw a leaf at the nearest Bee in range."""
         self.throw_at(self.nearest_bee())
 
-
+ 
 def random_bee(bees):
     """Return a random bee from a list of bees, or return None if bees is empty."""
     assert isinstance(bees, list), \
