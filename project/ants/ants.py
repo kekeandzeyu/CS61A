@@ -25,9 +25,16 @@ class Place:
         self.ant = None       # An Ant
         self.entrance = None  # A Place
         # Phase 1: Add an entrance to the exit
-        # BEGIN Problem 2
-        "*** YOUR CODE HERE ***"
-        # END Problem 2
+        if exit is not None:
+            exit.entrance = self
+        # p3 -> p2 -> p1
+        # p1 = Place('P1') # no exit or entrance for p1
+        # p2 = Place('P2', p1) # p2.exit = p1, exit.entrance = self => p1.entrance = p2
+        # p3 = Place('P3', p2) # p3.exit = p2, exit.entrance = self => p2.entrance = p3
+        # So final Connections:
+        # p1 (Hive): exit = None, entrance = p2
+        # p2: exit = p1, entrance = p3
+        # p3: exit = p2, entrance = None
 
     def add_insect(self, insect):
         """Asks the insect to add itself to this place. This method exists so
