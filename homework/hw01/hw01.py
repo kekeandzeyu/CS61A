@@ -45,11 +45,8 @@ def two_of_three(i, j, k):
     50
     """
     return min(i * i + j * j, i * i + k * k, j * j + k * k)
-    # Alternate solution
-
-
-def two_of_three_alternate(i, j, k):
-    return i ** 2 + j ** 2 + k ** 2 - max(i, j, k) ** 2
+    # Alternate Solution
+    # return i ** 2 + j ** 2 + k ** 2 - max(i, j, k) ** 2
 
 
 def two_of_three_syntax_check():
