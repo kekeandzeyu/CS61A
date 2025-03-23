@@ -1,4 +1,4 @@
-# CS61A Study Materials
+# CS61A - UC Berkeley
 
 ## 1 Introduction
 
